@@ -1,0 +1,22 @@
+<!-- npm install express -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Deck Of Cards</title>
+</head>
+<body>
+    <section class="game">
+        <h1> Deck of Cards </h1>
+        <h3>click to deal</h3>
+        <div id="deck"></div>
+        <h2>Your Hand</h2>
+        <div id="hand"></div>
+    </section>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/systemjs/0.20.12/system.js"></script>
+    
+    <script>SystemJS.import('./modules/Main.js')</script>
+</body>
+</html>
