@@ -15,19 +15,7 @@ class DeckOfCards implements Deck{
     discardArray : Array <Card>
     // init with array of cards or empty array
     constructor(initArray : Array <Card> = []){
-        this.deckArray = initArray;
-        this.discardArray = [];
-        // if empty array then create new deck with all possible cards
-        if(this.deckArray.length === 0){
-            for(let iSuit = 0 ; iSuit < suits.length; iSuit++){
-                for(let iRank = 0 ; iRank < ranks.length; iRank++){
-    
-                    this.deckArray.push(new Card(suits[iSuit], ranks[iRank]));
-    
-                }
-            }
-    
-        }
+        this.resetDeck(initArray);
         
     }
     // shuffle the cards
@@ -88,6 +76,22 @@ class DeckOfCards implements Deck{
     }
     getDiscard(): Array<Card>{
         return this.discardArray;
+    }
+
+    resetDeck(inputDeck : Array <Card> = []){
+        this.deckArray = inputDeck;
+        this.discardArray = [];
+        // if empty array then create new deck with all possible cards
+        if(this.deckArray.length === 0){
+            for(let iSuit = 0 ; iSuit < suits.length; iSuit++){
+                for(let iRank = 0 ; iRank < ranks.length; iRank++){
+    
+                    this.deckArray.push(new Card(suits[iSuit], ranks[iRank]));
+    
+                }
+            }
+    
+        }
     }
 }
 

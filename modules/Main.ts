@@ -42,7 +42,14 @@ import Card from "./Card.js"
             let stackView: HTMLElement = document.createElement("img");
             stackView.setAttribute("src", "./images/back-stack.png");
             discard.appendChild(stackView);
-        }, 500);
+            checkIfGameOver();
+            playerWarZone.discardHTMLFromZone();
+            oppWarZone.discardHTMLFromZone();
+            if(state !== "gameOver"){
+                state = "play";
+            }
+        }, 1000);
+        
     }
    
    
@@ -67,26 +74,40 @@ import Card from "./Card.js"
                 // war
                 state = "war"
             }
-            if(state === "animating"){
-                window.setTimeout( function() {
-                playerWarZone.discardHTMLFromZone();
-                oppWarZone.discardHTMLFromZone();
-                state = "play";
-            }, 1000);
-            }
+            
+            
+    }
+    function emptyDiscardView(){
+        while(playerDiscard.firstChild){
+            playerDiscard.removeChild(playerDiscard.firstChild);
+        }
+        while(oppDiscard.firstChild){
+            oppDiscard.removeChild(oppDiscard.firstChild);
+        }
+    }
+    function resetDeckView(){
+        // fill card div
+        if(deckOpponentView.style.backgroundImage === "none"){
+            deckOpponentView.style.backgroundImage = "url('images/back.jpg')";
+        }
+        if(deckPlayerView.style.backgroundImage === "none"){
+            deckPlayerView.style.backgroundImage = "url('images/back.jpg')";
+        }
     }
     // reset game
     function reset(){
         // clear discards
         // show back of card for deck
-        returnDiscards();
+        emptyDiscardView();
+        resetDeckView();
+        document.getElementById("display-game-over").innerHTML = "Game Over";
         gameOverView.style.visibility = "hidden";
-        playerDeck = new Deck();
+        playerDeck.resetDeck();
     
         // shuffle deck , split deck
         playerDeck.shuffle();
-        opponentDeck = new Deck (playerDeck.split());
-        
+        opponentDeck.resetDeck(playerDeck.split());
+        state="play";
         
     }
 
@@ -101,30 +122,22 @@ import Card from "./Card.js"
         
         // display div with winner name and buttons to reset
         let WinnerDisplay: HTMLElement = document.createElement('div');
-        WinnerDisplay.textContent = winner + "Won!";
+        WinnerDisplay.id = "winner-string";
+        WinnerDisplay.textContent = winner + " Won!";
         gameOverView.style.visibility = "visible";
-        // gameOverView.insertBefore(resetButton, WinnerDisplay);
+        document.getElementById("display-game-over").appendChild(WinnerDisplay);
         }, 1000);
     }
 
     function returnDiscards(){
         playerDeck.returnDiscardToDeck();
         // empty discard div
-        while(playerDiscard.firstChild){
-            playerDiscard.removeChild(playerDiscard.firstChild);
-        }
-
+        
         opponentDeck.returnDiscardToDeck();
-        while(oppDiscard.firstChild){
-            oppDiscard.removeChild(oppDiscard.firstChild);
-        }
+        
+        emptyDiscardView();
         // fill card div
-        if(deckOpponentView.style.backgroundImage === "none"){
-            deckOpponentView.style.backgroundImage = "url('images/back.jpg')";
-        }
-        if(deckPlayerView.style.backgroundImage === "none"){
-            deckPlayerView.style.backgroundImage = "url('images/back.jpg')";
-        }
+        resetDeckView();
     }
 
     function checkIfGameOver(): boolean{
@@ -133,16 +146,18 @@ import Card from "./Card.js"
         console.log(opponentDeck.isEmpty());
         console.log(opponentDeck.discardEmpty());
         // if discard is empty for player with no deck, then other person wins
-        if(state = "play"){
+        let returnValue:boolean = false;
+        if(state !== "war"){
             if(playerDeck.isEmpty()){
                 // if empty opponent wins
                 if(playerDeck.discardEmpty()){
                     // input of winner string
                     state = "gameOver";
                     gameOver("Opponent");
+                    return true;
                 }
                 else{
-                    return false;
+                    returnValue = false;
                 }
             }
             if(opponentDeck.isEmpty()){
@@ -150,14 +165,17 @@ import Card from "./Card.js"
                     // input of winner string
                     state = "gameOver";
                     gameOver("Player");
+                    return true;
                 }
                 else{
-                    return false;
+                    returnValue = false;
                 }
             } 
+       
         }
+            
         
-        return true;
+        return returnValue;
     }
     deckPlayerView.onclick= (event) => {
         // display all states; 
@@ -171,12 +189,15 @@ import Card from "./Card.js"
         console.log(playerDeck.getDeck());
         console.log("play discards");
         console.log(playerDeck.getDiscard());
-        
+        console.log("state");
+        let stateTemp = state;
+        console.log(stateTemp);
         // if animating game, wait
         if(state !== "animating" && state !== "gameOver"){
 
             // if state is war - next click adds 4 cards to warzone
             if(state === "war"){
+                state = "play";
                 // check how many cards left in each deck
                 let playerLeftInDeck = playerDeck.checkDeckAmount();
                 let oppLeftInDeck = opponentDeck.checkDeckAmount();
@@ -187,17 +208,20 @@ import Card from "./Card.js"
                 }
                 // if decks are not empty, draw remaining - 1 amount of cards
                 else if (!playerDeck.isEmpty() && !opponentDeck.isEmpty()){
-                    let maxLeft = Math.max(playerLeftInDeck, oppLeftInDeck);
-                    playerWarZone.addWarCards(playerDeck.deal(maxLeft - 1), "bottom");
-                    oppWarZone.addWarCards(opponentDeck.deal(maxLeft - 1), "top");
+                    let minLeft = Math.min(playerLeftInDeck, oppLeftInDeck);
+                    playerWarZone.addWarCards(playerDeck.deal(minLeft - 1), "bottom");
+                    oppWarZone.addWarCards(opponentDeck.deal(minLeft - 1), "top");
                 }
                 // if discards are not empty, shuffle them back in
-                else if(!playerDeck.discardEmpty() && !opponentDeck.discardEmpty()){
+                else if(!playerDeck.discardEmpty() || !opponentDeck.discardEmpty()){
+                    console.log("returning discard with war");
                     returnDiscards();
+                    state = "war";
                 }
                 // if one deck is empty, randomly pick who wins the cards 
                 // only happens if last draw from deck initiates war
                 else{
+                    console.log("using random number generator");
                     let randomNum = Math.random() >= .5;
                     // if true then player wins
                     if(randomNum){
@@ -207,9 +231,10 @@ import Card from "./Card.js"
                     else{
                         winCards(opponentDeck, oppDiscard, "top");
                     }
+                    
                 }
                 
-                state = "play";
+                
             }// if players have cards in their deck, continue
             else if(!playerDeck.isEmpty() && !opponentDeck.isEmpty() && state ==="play"){
                 state = "animating";
@@ -228,6 +253,8 @@ import Card from "./Card.js"
                 // put into winners discard pile 
                 window.setTimeout( function() {
                     roundOfWar(myCard, oppCard);
+                    
+                    // checkIfGameOver();
                 }, 2000);
                 
 
@@ -241,7 +268,7 @@ import Card from "./Card.js"
                         returnDiscards();
                 }
             }
-
+            
         } 
         
         if(playerDeck.isEmpty()){
@@ -253,10 +280,10 @@ import Card from "./Card.js"
             deckOpponentView.style.backgroundImage = "none";
         }
         // check if game over
-        state = "checking";
         
-        checkIfGameOver();
-        state="play";
+        
+        
+        
         
         
         

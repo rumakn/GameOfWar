@@ -82,11 +82,11 @@ body {
     left: 0;
     top: 0; }
     .discard > img:nth-child(3n+0) {
-      transform: rotate(-15deg); }
+      transform: rotate(-12deg); }
     .discard > img:nth-child(3n+1) {
-      transform: rotate(-9deg); }
+      transform: rotate(5deg); }
     .discard > img:nth-child(3n+2) {
-      transform: rotate(8deg); }
+      transform: rotate(6deg); }
 
 #discard-opponent {
   left: 240px; }

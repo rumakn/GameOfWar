@@ -10,16 +10,7 @@ var DeckOfCards = /** @class */ (function () {
     // init with array of cards or empty array
     function DeckOfCards(initArray) {
         if (initArray === void 0) { initArray = []; }
-        this.deckArray = initArray;
-        this.discardArray = [];
-        // if empty array then create new deck with all possible cards
-        if (this.deckArray.length === 0) {
-            for (var iSuit = 0; iSuit < suits.length; iSuit++) {
-                for (var iRank = 0; iRank < ranks.length; iRank++) {
-                    this.deckArray.push(new Card_js_1.default(suits[iSuit], ranks[iRank]));
-                }
-            }
-        }
+        this.resetDeck(initArray);
     }
     // shuffle the cards
     DeckOfCards.prototype.shuffle = function () {
@@ -72,6 +63,19 @@ var DeckOfCards = /** @class */ (function () {
     };
     DeckOfCards.prototype.getDiscard = function () {
         return this.discardArray;
+    };
+    DeckOfCards.prototype.resetDeck = function (inputDeck) {
+        if (inputDeck === void 0) { inputDeck = []; }
+        this.deckArray = inputDeck;
+        this.discardArray = [];
+        // if empty array then create new deck with all possible cards
+        if (this.deckArray.length === 0) {
+            for (var iSuit = 0; iSuit < suits.length; iSuit++) {
+                for (var iRank = 0; iRank < ranks.length; iRank++) {
+                    this.deckArray.push(new Card_js_1.default(suits[iSuit], ranks[iRank]));
+                }
+            }
+        }
     };
     return DeckOfCards;
 }());
