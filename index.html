@@ -4,16 +4,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="./css/style.css">
     <title>Deck Of Cards</title>
 </head>
 <body>
     <section class="game">
-        <h1> Deck of Cards </h1>
-        <h3>click to deal</h3>
-        <div id="deck"></div>
-        <h2>Your Hand</h2>
-        <div id="hand"></div>
+        <h1> Game of War </h1>
+        <h3>click on your deck to deal</h3>
+        <h2>Opponent's Deck</h2>
+        <div id="deck-opponent" class="deck"><div id="discard-opponent" class="discard"> </div></div>
+        
+        
+        <div class="warzones">
+            <div id="warzone-opponent" class="warzone"></div>
+            <div id="warzone-player" class="warzone"></div>
+        </div>
+        
+        <h2>Your Deck</h2>
+        <div id="deck-player" class="deck"><div id="discard-player" class="discard"> </div></div>
+        
+    </section>
+    <section id="game-over">
+        <h2> Game Over </h2>    
+        <div class="btn btn-reset" id="reset-button">
+            Play Again? 
+        </div>
     </section>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/systemjs/0.20.12/system.js"></script>
     

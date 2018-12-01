@@ -4,15 +4,29 @@
     "version": "2.0.0",
     "tasks": [
         {
+            "label": "compile-sass",
+            "type": "shell",
+            "command": "node-Sass",
+            "args": [
+                "./scss/style.scss",
+                "./css/style.css"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "dependsOn":["type"]   
+        },
+        {
+            "label":"type",
             "type": "typescript",
             "tsconfig": "tsconfig.json",
             "problemMatcher": [
                 "$tsc"
             ],
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            }
+            "group":"build"
+            
         }
+        
     ]
 }

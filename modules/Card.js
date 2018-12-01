@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+// values for different ranks
 var RankValues;
 (function (RankValues) {
     RankValues[RankValues["Two"] = 0] = "Two";
@@ -17,13 +18,16 @@ var RankValues;
     RankValues[RankValues["Ace"] = 12] = "Ace";
 })(RankValues || (RankValues = {}));
 var Card = /** @class */ (function () {
+    // init with suit and rank of card
     function Card(suit, rank) {
         this.suit = suit;
         this.rank = rank;
     }
+    // return string Rank of Suit
     Card.prototype.getCardType = function () {
         return this.rank + "of" + this.suit;
     };
+    // return numerical value of card
     Card.prototype.getCardValue = function () {
         return RankValues[this.rank];
     };

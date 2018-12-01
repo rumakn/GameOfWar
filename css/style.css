@@ -1,0 +1,115 @@
+* {
+  box-sizing: border-box; }
+
+.game {
+  text-align: center; }
+
+body {
+  background-color: #858585;
+  height: 100%;
+  background-size: initial;
+  color: white;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; }
+
+.deck {
+  margin: auto;
+  background-image: url("../images/back.jpg");
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin-bottom: 40px;
+  text-align: center;
+  box-shadow: 0px 0px 8px  black;
+  width: 300px;
+  height: 150px;
+  position: relative; }
+
+#deck-player:hover {
+  cursor: pointer; }
+
+.warzones {
+  height: 400px; }
+
+.warzone {
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  flex-wrap: nowrap; }
+
+#warzone-opponent {
+  padding-left: 60px;
+  padding-right: 100px; }
+
+#warzone-player {
+  padding-right: 160px; }
+
+.card {
+  opacity: 1;
+  -webkit-transition: 1s ease-in-out;
+  -moz-transition: 1s ease-in-out;
+  -o-transition: 1s ease-in-out;
+  transition: 1s ease-in-out; }
+
+.card-bottom {
+  animation-delay: 2s;
+  opacity: 0;
+  -webkit-transform: translate(0, 3em);
+  -moz-transform: translate(0, 3em);
+  -o-transform: translate(0, 3em);
+  -ms-transform: translate(0, 3em);
+  transform: translate(0, 3em); }
+
+.card-top {
+  opacity: 0;
+  -webkit-transform: translate(0, -3em);
+  -moz-transform: translate(0, -3em);
+  -o-transform: translate(0, -3em);
+  -ms-transform: translate(0, -3em);
+  transform: translate(0, -3em); }
+
+.discard {
+  position: absolute;
+  top: 0px;
+  margin-bottom: 40px;
+  text-align: center;
+  background-color: grey;
+  width: 200px;
+  height: 120px; }
+  .discard > img {
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 0; }
+    .discard > img:nth-child(3n+0) {
+      transform: rotate(-15deg); }
+    .discard > img:nth-child(3n+1) {
+      transform: rotate(-9deg); }
+    .discard > img:nth-child(3n+2) {
+      transform: rotate(8deg); }
+
+#discard-opponent {
+  left: 240px; }
+
+#discard-player {
+  right: 240px; }
+
+#game-over {
+  position: fixed;
+  width: 400px;
+  height: 160px;
+  margin-top: -80px;
+  margin-left: -200px;
+  background-color: #3B3B3B88;
+  left: 50%;
+  top: 50%;
+  text-align: center;
+  visibility: hidden; }
+
+.btn {
+  max-width: 140px;
+  padding: 10px;
+  margin: auto;
+  background-color: #268C63;
+  border-radius: 10px;
+  cursor: pointer; }
