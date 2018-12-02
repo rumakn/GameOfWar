@@ -2,10 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var Card_js_1 = require("./Card.js");
 // all ranks and suits
-// let ranks = ["Two" , "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Jack", "Queen", "King", "Ace"];
-// let suits = ["Clubs", "Diamonds", "Hearts","Spades"];
-var ranks = ["Two", "Three", "Four"];
-var suits = ["Clubs", "Diamonds"];
+var ranks = ["Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Jack", "Queen", "King", "Ace"];
+var suits = ["Clubs", "Diamonds", "Hearts", "Spades"];
 var DeckOfCards = /** @class */ (function () {
     // init with array of cards or empty array
     function DeckOfCards(initArray) {

@@ -22,7 +22,7 @@ var PlayZone = /** @class */ (function () {
         }
         // else show back of card
         else {
-            cardView.innerHTML = "<img src='./images/back-vert.jpg' width='150px'>";
+            cardView.innerHTML = "<img src='./images/back-vert.png' width='150px'>";
         }
         this.div.appendChild(cardView);
         // check direction it should come from 

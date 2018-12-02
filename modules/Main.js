@@ -17,15 +17,24 @@ var oppDiscard = document.getElementById('discard-opponent');
 // init playzones/warzones
 var playerWarZone = new PlayZone_js_1.default(playerWarView);
 var oppWarZone = new PlayZone_js_1.default(oppWarView);
-// get reset button and game over div
+// get reset button and game over and instruction sections
 var resetButton = document.getElementById('reset-button');
 var gameOverView = document.getElementById('game-over');
+var instructionsView = document.getElementById("instructions");
+instructionsView.style.visibility = "visible";
 var state = "play";
 // styles
 deckPlayerView.style.width = "200px";
-deckPlayerView.style.height = "120px";
+deckPlayerView.style.height = "130px";
 deckOpponentView.style.width = "200px";
-deckOpponentView.style.height = "120px";
+deckOpponentView.style.height = "130px";
+// if instructions visible, then hide when click deck
+function checkInstructions() {
+    console.log(instructionsView.style.visibility);
+    if (instructionsView.style.visibility == "visible") {
+        instructionsView.style.visibility = "hidden";
+    }
+}
 function winCards(winner, discard, direction) {
     // add cards to my discard pile
     var wonCards = playerWarZone.discardFromZone(direction);
@@ -73,10 +82,10 @@ function emptyDiscardView() {
 function resetDeckView() {
     // fill card div
     if (deckOpponentView.style.backgroundImage === "none") {
-        deckOpponentView.style.backgroundImage = "url('images/back.jpg')";
+        deckOpponentView.style.backgroundImage = "url('images/back.png')";
     }
     if (deckPlayerView.style.backgroundImage === "none") {
-        deckPlayerView.style.backgroundImage = "url('images/back.jpg')";
+        deckPlayerView.style.backgroundImage = "url('images/back.png')";
     }
 }
 // reset game
@@ -87,6 +96,7 @@ function reset() {
     resetDeckView();
     document.getElementById("display-game-over").innerHTML = "Game Over";
     gameOverView.style.visibility = "hidden";
+    instructionsView.style.visibility = "visible";
     playerDeck.resetDeck();
     // shuffle deck , split deck
     playerDeck.shuffle();
@@ -150,19 +160,8 @@ function checkIfGameOver() {
     return returnValue;
 }
 deckPlayerView.onclick = function (event) {
-    // display all states; 
-    console.log("here");
-    console.log("opp Deck");
-    console.log(opponentDeck.getDeck());
-    console.log("opp discards");
-    console.log(opponentDeck.getDiscard());
-    console.log("play Deck");
-    console.log(playerDeck.getDeck());
-    console.log("play discards");
-    console.log(playerDeck.getDiscard());
-    console.log("state");
-    var stateTemp = state;
-    console.log(stateTemp);
+    // if instructions visible, hide them
+    checkInstructions();
     // if animating game, wait
     if (state !== "animating" && state !== "gameOver") {
         // if state is war - next click adds 4 cards to warzone

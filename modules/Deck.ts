@@ -1,10 +1,9 @@
 import Card from './Card.js'
 // all ranks and suits
-// let ranks = ["Two" , "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Jack", "Queen", "King", "Ace"];
-// let suits = ["Clubs", "Diamonds", "Hearts","Spades"];
+let ranks = ["Two" , "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Jack", "Queen", "King", "Ace"];
+let suits = ["Clubs", "Diamonds", "Hearts","Spades"];
 
-let ranks = ["Two" , "Three", "Four"];
-let suits = ["Clubs", "Diamonds"];
+
 
 interface Deck {
     deckArray: Array <Card>;

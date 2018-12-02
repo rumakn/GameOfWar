@@ -18,17 +18,24 @@ import Card from "./Card.js"
     let playerWarZone :PlayZone = new PlayZone(playerWarView);
     let oppWarZone: PlayZone = new PlayZone(oppWarView);
 
-    // get reset button and game over div
+    // get reset button and game over and instruction sections
     let resetButton : HTMLElement = document.getElementById('reset-button');
     let gameOverView : HTMLElement = document.getElementById('game-over');
-
+    let instructionsView : HTMLElement = document.getElementById("instructions");
+    instructionsView.style.visibility = "visible";
     let state :string = "play";
     // styles
     deckPlayerView.style.width = "200px";
-    deckPlayerView.style.height = "120px";
+    deckPlayerView.style.height = "130px";
     deckOpponentView.style.width = "200px";
-    deckOpponentView.style.height = "120px";
-
+    deckOpponentView.style.height = "130px";
+    // if instructions visible, then hide when click deck
+    function checkInstructions(){
+        console.log(instructionsView.style.visibility);
+        if(instructionsView.style.visibility == "visible"){
+            instructionsView.style.visibility = "hidden";
+        }
+    }
     function winCards(winner:Deck, discard:HTMLElement,  direction: string){
         // add cards to my discard pile
         let wonCards: Array<Card> = playerWarZone.discardFromZone(direction);
@@ -88,10 +95,10 @@ import Card from "./Card.js"
     function resetDeckView(){
         // fill card div
         if(deckOpponentView.style.backgroundImage === "none"){
-            deckOpponentView.style.backgroundImage = "url('images/back.jpg')";
+            deckOpponentView.style.backgroundImage = "url('images/back.png')";
         }
         if(deckPlayerView.style.backgroundImage === "none"){
-            deckPlayerView.style.backgroundImage = "url('images/back.jpg')";
+            deckPlayerView.style.backgroundImage = "url('images/back.png')";
         }
     }
     // reset game
@@ -102,6 +109,7 @@ import Card from "./Card.js"
         resetDeckView();
         document.getElementById("display-game-over").innerHTML = "Game Over";
         gameOverView.style.visibility = "hidden";
+        instructionsView.style.visibility = "visible";
         playerDeck.resetDeck();
     
         // shuffle deck , split deck
@@ -178,20 +186,8 @@ import Card from "./Card.js"
         return returnValue;
     }
     deckPlayerView.onclick= (event) => {
-        // display all states; 
-
-        console.log("here");
-        console.log("opp Deck");
-        console.log(opponentDeck.getDeck());
-        console.log("opp discards");
-        console.log(opponentDeck.getDiscard());
-        console.log("play Deck");
-        console.log(playerDeck.getDeck());
-        console.log("play discards");
-        console.log(playerDeck.getDiscard());
-        console.log("state");
-        let stateTemp = state;
-        console.log(stateTemp);
+        // if instructions visible, hide them
+        checkInstructions();
         // if animating game, wait
         if(state !== "animating" && state !== "gameOver"){
 
